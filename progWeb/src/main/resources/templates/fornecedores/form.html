@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fornecedor - Marcenaria Stock</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <h1>Cadastro de Fornecedor</h1>
+
+    <!-- th:object vincula o formulário ao objeto fornecedor do model -->
+    <form th:action="@{/fornecedores/salvar}" th:object="${fornecedor}" method="post">
+
+        <!-- Campo oculto para preservar o id ao editar -->
+        <input type="hidden" th:field="*{id}">
+
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" th:field="*{nome}" placeholder="Nome do fornecedor">
+
+        <label for="cnpj">CNPJ:</label>
+        <input type="text" id="cnpj" th:field="*{cnpj}" placeholder="00.000.000/0000-00">
+
+        <label for="telefone">Telefone:</label>
+        <input type="text" id="telefone" th:field="*{telefone}" placeholder="(67) 99999-9999">
+
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" th:field="*{email}" placeholder="contato@fornecedor.com">
+
+        <button type="submit">Salvar</button>
+
+    </form>
+
+    <br>
+    <a href="/fornecedores">Voltar</a>
+
+</body>
+</html>
