@@ -1,19 +1,25 @@
 package br.ufms.facom.progWeb.controllers;
 
+import br.ufms.facom.progWeb.models.Produto;
+import br.ufms.facom.progWeb.service.ProdutoService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("/produtos")
 public class ProdutoController {
 
-    @GetMapping("/")
-    public String home() {
-        return "index";
+    private final ProdutoService service;
+
+    public ProdutoController(ProdutoService service) {
+        this.service = service;
     }
 
-    @GetMapping("/produtos")
-    public String produtos() {
-        return "produtos";
+    @GetMapping
+    public String listar(Model model) {
+        model.addAttribute("produtos", service.getProdutos());
+        return "produtos"; // renderiza produtos.html com a lista
     }
 
     @GetMapping("/cadastro")
@@ -21,13 +27,27 @@ public class ProdutoController {
         return "cadastro";
     }
 
-    @GetMapping("/editar")
-    public String editar() {
+    @PostMapping("/salvar")
+    public String salvar(@ModelAttribute Produto produto) {
+        service.salvarProduto(produto);
+        return "redirect:/produtos";
+    }
+
+    @GetMapping("/editar/{id}")
+    public String editar(@PathVariable Long id, Model model) {
+        model.addAttribute("produto", service.getProduto(id));
         return "editar";
     }
 
-    @GetMapping("/excluir")
-    public String excluir() {
-        return "excluir";
+    @PostMapping("/atualizar/{id}")
+    public String atualizar(@PathVariable Long id, @ModelAttribute Produto produto) {
+        service.atualizarProduto(id, produto);
+        return "redirect:/produtos";
+    }
+
+    @GetMapping("/excluir/{id}")
+    public String excluir(@PathVariable Long id) {
+        service.excluirProduto(id);
+        return "redirect:/produtos";
     }
 }
