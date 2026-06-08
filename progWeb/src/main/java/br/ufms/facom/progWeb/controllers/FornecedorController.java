@@ -23,26 +23,42 @@ public class FornecedorController {
     }
 
     @GetMapping("/cadastro")
-    public String cadastro() {
-        return "fornecedores/cadastro";
+    public String cadastro(Model model) {
+        model.addAttribute("fornecedor", new Fornecedor());
+        return "fornecedores/form";
     }
 
     @PostMapping("/salvar")
-    public String salvar(@ModelAttribute Fornecedor fornecedor) {
-        service.salvarFornecedor(fornecedor);
-        return "redirect:/fornecedores";
+    public String salvar(@ModelAttribute Fornecedor fornecedor, Model model) {
+        try {
+            service.salvarFornecedor(fornecedor);
+            return "redirect:/fornecedores";
+        } catch (IllegalArgumentException e) {
+            // CNPJ duplicado: volta pro formulário mostrando o erro em vez de quebrar a página
+            model.addAttribute("erro", e.getMessage());
+            model.addAttribute("fornecedor", fornecedor);
+            return "fornecedores/form";
+        }
     }
 
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
         model.addAttribute("fornecedor", service.getFornecedor(id));
-        return "fornecedores/editar";
+        return "fornecedores/form";
     }
 
     @PostMapping("/atualizar/{id}")
-    public String atualizar(@PathVariable Long id, @ModelAttribute Fornecedor dadosNovos) {
-        service.atualizarFornecedor(id, dadosNovos);
-        return "redirect:/fornecedores";
+    public String atualizar(@PathVariable Long id, @ModelAttribute Fornecedor dadosNovos, Model model) {
+        try {
+            service.atualizarFornecedor(id, dadosNovos);
+            return "redirect:/fornecedores";
+        } catch (IllegalArgumentException e) {
+            // CNPJ duplicado: volta pro formulário mostrando o erro em vez de quebrar a página
+            model.addAttribute("erro", e.getMessage());
+            dadosNovos.setId(id);
+            model.addAttribute("fornecedor", dadosNovos);
+            return "fornecedores/form";
+        }
     }
 
     @GetMapping("/excluir/{id}")

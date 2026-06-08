@@ -16,6 +16,10 @@ public class FornecedorService {
     }
 
     public void salvarFornecedor(Fornecedor fornecedor) {
+        // Evita salvar dois fornecedores com o mesmo CNPJ (a coluna é unique no banco)
+        if (repository.existsByCnpj(fornecedor.getCnpj())) {
+            throw new IllegalArgumentException("Já existe um fornecedor cadastrado com esse CNPJ");
+        }
         repository.save(fornecedor);
     }
 
@@ -33,6 +37,11 @@ public class FornecedorService {
 
     public void atualizarFornecedor(Long id, Fornecedor dadosNovos) {
         Fornecedor fornecedor = repository.findById(id).orElseThrow(() -> new RuntimeException("Fornecedor não encontrado"));
+
+        // Evita alterar para um CNPJ que já pertence a outro fornecedor
+        if (dadosNovos.getCnpj() != null && repository.existsByCnpjAndIdNot(dadosNovos.getCnpj(), id)) {
+            throw new IllegalArgumentException("Já existe um fornecedor cadastrado com esse CNPJ");
+        }
 
         if (dadosNovos.getNome() != null) fornecedor.setNome(dadosNovos.getNome());
         if (dadosNovos.getCnpj() != null) fornecedor.setCnpj(dadosNovos.getCnpj());
