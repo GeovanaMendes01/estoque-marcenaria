@@ -1,5 +1,6 @@
 package br.ufms.facom.progWeb.controllers;
 
+import br.ufms.facom.progWeb.service.FornecedorService;
 import br.ufms.facom.progWeb.models.Produto;
 import br.ufms.facom.progWeb.service.ProdutoService;
 import org.springframework.stereotype.Controller;
@@ -11,9 +12,14 @@ import org.springframework.web.bind.annotation.*;
 public class ProdutoController {
 
     private final ProdutoService service;
-
-    public ProdutoController(ProdutoService service) {
+    private final FornecedorService fornecedorService;
+    
+    public ProdutoController(
+            ProdutoService service,
+            FornecedorService fornecedorService) {
+            
         this.service = service;
+        this.fornecedorService = fornecedorService;
     }
 
     @GetMapping
@@ -23,7 +29,11 @@ public class ProdutoController {
     }
 
     @GetMapping("/cadastro")
-    public String cadastro() {
+    public String cadastro(Model model) {
+
+        model.addAttribute("fornecedores",
+                fornecedorService.getFornecedores());
+
         return "cadastro";
     }
 
@@ -35,7 +45,17 @@ public class ProdutoController {
 
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
-        model.addAttribute("produto", service.getProduto(id));
+
+        model.addAttribute(
+                "produto",
+                service.getProduto(id)
+        );
+
+        model.addAttribute(
+                "fornecedores",
+                fornecedorService.getFornecedores()
+        );
+
         return "editar";
     }
 

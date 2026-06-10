@@ -1,62 +1,167 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fornecedor - Marcenaria Stock</title>
+
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
 
-    <h1 th:text="${fornecedor.id == null} ? 'Cadastro de Fornecedor' : 'Editar Fornecedor'"></h1>
+<aside class="sidebar">
 
-    <!-- Mensagem de erro exibida quando o CNPJ já está cadastrado -->
-    <p th:if="${erro}" th:text="${erro}" style="color: red; font-weight: bold;"></p>
+    <div class="sidebar-logo">
+        <i class="fas fa-tools sidebar-logo-icon"></i>
+        <div class="sidebar-logo-texto">
+            <span class="sidebar-logo-nome">Marcenaria</span>
+            <span class="sidebar-logo-sub">Sistema de Estoque</span>
+        </div>
+    </div>
 
-    <!-- th:object vincula o formulário ao objeto fornecedor do model -->
-    <!-- Se o id for nulo é um fornecedor novo (salvar); senão é edição (atualizar) -->
-    <form th:action="${fornecedor.id == null} ? @{/fornecedores/salvar} : @{/fornecedores/atualizar/{id}(id=${fornecedor.id})}"
-          th:object="${fornecedor}" method="post">
+    <nav class="sidebar-nav">
 
-        <!-- Campo oculto para preservar o id ao editar -->
-        <input type="hidden" th:field="*{id}">
+        <div class="nav-grupo">
+            <span class="nav-label">PRINCIPAL</span>
+            <ul>
+                <li>
+                    <a href="/" class="nav-item">
+                        <i class="fas fa-home"></i>
+                        Dashboard
+                    </a>
+                </li>
+            </ul>
+        </div>
 
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" th:field="*{nome}" placeholder="Nome do fornecedor">
+        <div class="nav-grupo">
+            <span class="nav-label">ESTOQUE</span>
+            <ul>
+                <li>
+                    <a href="/produtos" class="nav-item">
+                        <i class="fas fa-boxes"></i>
+                        Produtos
+                    </a>
+                </li>
+                <li>
+                    <a href="/fornecedores" class="nav-item ativo">
+                        <i class="fas fa-truck"></i>
+                        Fornecedores
+                    </a>
+                </li>
+            </ul>
+        </div>
 
-        <label for="cnpj">CNPJ:</label>
-        <input type="text" id="cnpj" th:field="*{cnpj}" placeholder="00.000.000/0000-00">
+        <div class="nav-grupo">
+            <span class="nav-label">MOVIMENTAÇÕES</span>
+            <ul>
+                <li>
+                    <a href="/baixas" class="nav-item">
+                        <i class="fas fa-arrow-circle-down"></i>
+                        Baixas
+                    </a>
+                </li>
+            </ul>
+        </div>
 
-        <label for="telefone">Telefone:</label>
-        <input type="text" id="telefone" th:field="*{telefone}" placeholder="(67) 99999-9999"
-               maxlength="15" oninput="aplicarMascaraTelefone(this)">
+    </nav>
 
-        <label for="email">E-mail:</label>
-        <input type="email" id="email" th:field="*{email}" placeholder="contato@fornecedor.com">
+</aside>
 
-        <button type="submit">Salvar</button>
+<main class="conteudo">
 
-    </form>
+    <div class="pagina-header">
+        <div class="pagina-header-titulo">
+            <i class="fas fa-truck"></i>
+            <h1 th:text="${fornecedor.id == null} ? 'Novo Fornecedor' : 'Editar Fornecedor'"></h1>
+        </div>
+        <a href="/fornecedores" class="btn-voltar">
+            <i class="fas fa-arrow-left"></i> Voltar
+        </a>
+    </div>
 
-    <br>
-    <a href="/fornecedores">Voltar</a>
+    <div class="form-card">
 
-    <script>
-        // Formata o telefone digitado como (XX) XXXXX-XXXX, mantendo só números
-        function aplicarMascaraTelefone(campo) {
-            let numeros = campo.value.replace(/\D/g, ""); // remove tudo que não é dígito
-            numeros = numeros.substring(0, 11); // limita a 11 dígitos (DDD + 9 dígitos)
+        <p class="erro" th:if="${erro}" th:text="${erro}"></p>
 
-            if (numeros.length > 10) {
-                campo.value = numeros.replace(/(\d{2})(\d{5})(\d{0,4})/, "($1) $2-$3");
-            } else if (numeros.length > 6) {
-                campo.value = numeros.replace(/(\d{2})(\d{4})(\d{0,4})/, "($1) $2-$3");
-            } else if (numeros.length > 2) {
-                campo.value = numeros.replace(/(\d{2})(\d{0,5})/, "($1) $2");
-            } else {
-                campo.value = numeros.replace(/(\d{0,2})/, "($1");
-            }
+        <form th:action="${fornecedor.id == null}
+                        ? @{/fornecedores/salvar}
+                        : @{/fornecedores/atualizar/{id}(id=${fornecedor.id})}"
+              th:object="${fornecedor}"
+              method="post">
+
+            <input type="hidden" th:field="*{id}">
+
+            <div class="form-grupo">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" th:field="*{nome}" placeholder="Nome do fornecedor">
+            </div>
+
+            <div class="form-grid-2">
+
+                <div class="form-grupo">
+                    <label for="cnpj">CNPJ</label>
+                    <input type="text" id="cnpj" th:field="*{cnpj}" placeholder="00.000.000/0000-00" maxlength="16" >
+                </div>
+
+                <div class="form-grupo">
+                    <label for="telefone">Telefone</label>
+                    <input type="text" id="telefone" th:field="*{telefone}"
+                           placeholder="(67) 99999-9999"
+                           maxlength="15"
+                           oninput="aplicarMascaraTelefone(this)">
+                </div>
+
+            </div>
+
+            <div class="form-grupo">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" th:field="*{email}" placeholder="contato@fornecedor.com">
+            </div>
+
+            <div class="form-botoes">
+                <button type="submit" class="btn-salvar">
+                    <i class="fas fa-save"></i> Salvar
+                </button>
+                <a href="/fornecedores" class="btn-cancelar">Cancelar</a>
+            </div>
+
+        </form>
+
+    </div>
+
+</main>
+
+<script>
+    function aplicarMascaraTelefone(campo) {
+
+        let numeros = campo.value.replace(/\D/g, "");
+
+        numeros = numeros.substring(0, 11);
+
+        if (numeros.length > 10) {
+            campo.value = numeros.replace(
+                /(\d{2})(\d{5})(\d{0,4})/,
+                "($1) $2-$3"
+            );
+        } else if (numeros.length > 6) {
+            campo.value = numeros.replace(
+                /(\d{2})(\d{4})(\d{0,4})/,
+                "($1) $2-$3"
+            );
+        } else if (numeros.length > 2) {
+            campo.value = numeros.replace(
+                /(\d{2})(\d{0,5})/,
+                "($1) $2"
+            );
+        } else {
+            campo.value = numeros.replace(
+                /(\d{0,2})/,
+                "($1"
+            );
         }
-    </script>
+    }
+</script>
 
 </body>
 </html>

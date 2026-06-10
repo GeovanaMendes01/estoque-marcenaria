@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fornecedores - Marcenaria Stock</title>
+    <title>Baixas - Marcenaria Stock</title>
 
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -44,7 +44,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/fornecedores" class="nav-item ativo">
+                    <a href="/fornecedores" class="nav-item">
                         <i class="fas fa-truck"></i>
                         Fornecedores
                     </a>
@@ -56,7 +56,7 @@
             <span class="nav-label">MOVIMENTAÇÕES</span>
             <ul>
                 <li>
-                    <a href="/baixas" class="nav-item">
+                    <a href="/baixas" class="nav-item ativo">
                         <i class="fas fa-arrow-circle-down"></i>
                         Baixas
                     </a>
@@ -72,11 +72,11 @@
 
     <div class="pagina-header">
         <div class="pagina-header-titulo">
-            <i class="fas fa-truck"></i>
-            <h1>Fornecedores</h1>
+            <i class="fas fa-arrow-circle-down"></i>
+            <h1>Baixas</h1>
         </div>
-        <a href="/fornecedores/cadastro" class="btn-novo">
-            <i class="fas fa-plus"></i> Novo Fornecedor
+        <a href="/baixas/cadastro" class="btn-novo">
+            <i class="fas fa-plus"></i> Nova Baixa
         </a>
     </div>
 
@@ -84,31 +84,28 @@
         <table>
             <thead>
             <tr>
-                <th>Nome</th>
-                <th>CNPJ</th>
-                <th>Telefone</th>
-                <th>E-mail</th>
+                <th>Data</th>
+                <th>Produto</th>
+                <th>Quantidade</th>
                 <th>Ações</th>
             </tr>
             </thead>
             <tbody>
 
-            <tr th:each="fornecedor : ${fornecedores}">
-                <td th:text="${fornecedor.nome}"></td>
-                <td th:text="${fornecedor.cnpj}"></td>
-                <td th:text="${fornecedor.telefone}"></td>
-                <td th:text="${fornecedor.email}"></td>
+            <tr th:each="baixa : ${baixas}">
+                <td th:text="${#temporals.format(baixa.data, 'dd/MM/yyyy')}"></td>
+                <td th:text="${baixa.produto.nome}"></td>
+                <td th:text="${baixa.quantidade}"></td>
                 <td class="acoes-tabela">
-                    <a th:href="@{/fornecedores/editar/{id}(id=${fornecedor.id})}">Editar</a>
-                    <a th:href="@{/fornecedores/excluir/{id}(id=${fornecedor.id})}"
-                       onclick="return confirm('Confirma a exclusão deste fornecedor?')">Excluir</a>
+                    <a th:href="@{/baixas/excluir/{id}(id=${baixa.id})}"
+                       onclick="return confirm('Confirma a exclusão desta baixa?')">Excluir</a>
                 </td>
             </tr>
 
-            <tr th:if="${#lists.isEmpty(fornecedores)}">
-                <td colspan="5" class="tabela-vazia">
-                    Nenhum fornecedor cadastrado.
-                    <a href="/fornecedores/cadastro">Cadastrar agora</a>
+            <tr th:if="${#lists.isEmpty(baixas)}">
+                <td colspan="4" class="tabela-vazia">
+                    Nenhuma baixa registrada.
+                    <a href="/baixas/cadastro">Registrar agora</a>
                 </td>
             </tr>
 

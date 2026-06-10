@@ -1,34 +1,143 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Editar Produto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Produto - Marcenaria Stock</title>
 
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
 
-    <h1>Editar Produto</h1>
+<aside class="sidebar">
 
-    <form>
-        <label>Nome do Produto:</label>
-        <input type="text">
+    <div class="sidebar-logo">
+        <i class="fas fa-tools sidebar-logo-icon"></i>
+        <div class="sidebar-logo-texto">
+            <span class="sidebar-logo-nome">Marcenaria</span>
+            <span class="sidebar-logo-sub">Sistema de Estoque</span>
+        </div>
+    </div>
 
-        <label>Tipo da Madeira:</label>
-        <input type="text">
+    <nav class="sidebar-nav">
 
-        <label>Quantidade:</label>
-        <input type="number">
+        <div class="nav-grupo">
+            <span class="nav-label">PRINCIPAL</span>
+            <ul>
+                <li>
+                    <a href="/" class="nav-item">
+                        <i class="fas fa-home"></i>
+                        Dashboard
+                    </a>
+                </li>
+            </ul>
+        </div>
 
-        <label>Preço:</label>
-        <input type="number">
+        <div class="nav-grupo">
+            <span class="nav-label">ESTOQUE</span>
+            <ul>
+                <li>
+                    <a href="/produtos" class="nav-item ativo">
+                        <i class="fas fa-boxes"></i>
+                        Produtos
+                    </a>
+                </li>
+                <li>
+                    <a href="/fornecedores" class="nav-item">
+                        <i class="fas fa-truck"></i>
+                        Fornecedores
+                    </a>
+                </li>
+            </ul>
+        </div>
 
-        <button type="submit">Atualizar</button>
-    </form>
+        <div class="nav-grupo">
+            <span class="nav-label">MOVIMENTAÇÕES</span>
+            <ul>
+                <li>
+                    <a href="/baixas" class="nav-item">
+                        <i class="fas fa-arrow-circle-down"></i>
+                        Baixas
+                    </a>
+                </li>
+            </ul>
+        </div>
 
-    <br>
+    </nav>
 
-    <a href="/">Voltar</a>
+</aside>
+
+<main class="conteudo">
+
+    <div class="pagina-header">
+        <div class="pagina-header-titulo">
+            <i class="fas fa-boxes"></i>
+            <h1>Editar Produto</h1>
+        </div>
+        <a href="/produtos" class="btn-voltar">
+            <i class="fas fa-arrow-left"></i> Voltar
+        </a>
+    </div>
+
+    <div class="form-card">
+
+        <form th:action="@{/produtos/atualizar/{id}(id=${produto.id})}"
+              th:object="${produto}"
+              method="post">
+
+            <input type="hidden" th:field="*{id}">
+
+            <div class="form-grupo">
+                <label for="nome">Nome do Produto</label>
+                <input id="nome" type="text" th:field="*{nome}">
+            </div>
+
+            <div class="form-grupo">
+                <label for="descricao">Descrição</label>
+                <input id="descricao" type="text" th:field="*{descricao}">
+            </div>
+
+            <div class="form-grid-2">
+
+                <div class="form-grupo">
+                    <label for="quantidade">Quantidade em Estoque</label>
+                    <input id="quantidade" type="number" th:field="*{quantidade}">
+                </div>
+
+                <div class="form-grupo">
+                    <label for="preco">Preço (R$)</label>
+                    <input id="preco" type="number" step="0.01" th:field="*{preco}">
+                </div>
+
+            </div>
+
+            <div class="form-grupo">
+                <label for="fornecedor">Fornecedor</label>
+                <select id="fornecedor" name="fornecedor.id">
+                    <option value="">Nenhum</option>
+                    <option
+                            th:each="fornecedor : ${fornecedores}"
+                            th:value="${fornecedor.id}"
+                            th:text="${fornecedor.nome}"
+                            th:selected="${produto.fornecedor != null
+                                          and produto.fornecedor.id == fornecedor.id}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-botoes">
+                <button type="submit" class="btn-salvar">
+                    <i class="fas fa-save"></i> Salvar
+                </button>
+                <a href="/produtos" class="btn-cancelar">Cancelar</a>
+            </div>
+
+        </form>
+
+    </div>
+
+</main>
 
 </body>
 </html>

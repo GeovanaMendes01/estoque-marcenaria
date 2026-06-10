@@ -1,25 +1,124 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Produtos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos - Marcenaria Stock</title>
 
     <link rel="stylesheet" href="/css/style.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
 
-    <h1>Produtos da Marcenaria</h1>
+<aside class="sidebar">
 
-    <hr>
+    <div class="sidebar-logo">
+        <i class="fas fa-tools sidebar-logo-icon"></i>
+        <div class="sidebar-logo-texto">
+            <span class="sidebar-logo-nome">Marcenaria</span>
+            <span class="sidebar-logo-sub">Sistema de Estoque</span>
+        </div>
+    </div>
 
-    <ul>
-        <li>Mesa de Madeira</li>
-        <li>Cadeira Rústica</li>
-        <li>Armário Planejado</li>
-    </ul>
+    <nav class="sidebar-nav">
 
-    <a href="/">Voltar</a>
+        <div class="nav-grupo">
+            <span class="nav-label">PRINCIPAL</span>
+            <ul>
+                <li>
+                    <a href="/" class="nav-item">
+                        <i class="fas fa-home"></i>
+                        Dashboard
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="nav-grupo">
+            <span class="nav-label">ESTOQUE</span>
+            <ul>
+                <li>
+                    <a href="/produtos" class="nav-item ativo">
+                        <i class="fas fa-boxes"></i>
+                        Produtos
+                    </a>
+                </li>
+                <li>
+                    <a href="/fornecedores" class="nav-item">
+                        <i class="fas fa-truck"></i>
+                        Fornecedores
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="nav-grupo">
+            <span class="nav-label">MOVIMENTAÇÕES</span>
+            <ul>
+                <li>
+                    <a href="/baixas" class="nav-item">
+                        <i class="fas fa-arrow-circle-down"></i>
+                        Baixas
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </nav>
+
+</aside>
+
+<main class="conteudo">
+
+    <div class="pagina-header">
+        <div class="pagina-header-titulo">
+            <i class="fas fa-boxes"></i>
+            <h1>Produtos</h1>
+        </div>
+        <a href="/produtos/cadastro" class="btn-novo">
+            <i class="fas fa-plus"></i> Novo Produto
+        </a>
+    </div>
+
+    <div class="tabela-container">
+        <table>
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Quantidade</th>
+                <th>Preço</th>
+                <th>Fornecedor</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:each="produto : ${produtos}">
+                <td th:text="${produto.nome}"></td>
+                <td th:text="${produto.descricao}"></td>
+                <td th:text="${produto.quantidade}"></td>
+                <td>R$ <span th:text="${produto.preco}"></span></td>
+                <td th:text="${produto.fornecedor != null ? produto.fornecedor.nome : 'Sem fornecedor'}"></td>
+                <td class="acoes-tabela">
+                    <a th:href="@{/produtos/editar/{id}(id=${produto.id})}">Editar</a>
+                    <a th:href="@{/produtos/excluir/{id}(id=${produto.id})}"
+                       onclick="return confirm('Confirma a exclusão deste produto?')">Excluir</a>
+                </td>
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(produtos)}">
+                <td colspan="6" class="tabela-vazia">
+                    Nenhum produto cadastrado.
+                    <a href="/produtos/cadastro">Cadastrar agora</a>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+</main>
 
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fornecedores - Marcenaria Stock</title>
+    <title>Nova Baixa - Marcenaria Stock</title>
 
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -44,7 +44,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/fornecedores" class="nav-item ativo">
+                    <a href="/fornecedores" class="nav-item">
                         <i class="fas fa-truck"></i>
                         Fornecedores
                     </a>
@@ -56,7 +56,7 @@
             <span class="nav-label">MOVIMENTAÇÕES</span>
             <ul>
                 <li>
-                    <a href="/baixas" class="nav-item">
+                    <a href="/baixas" class="nav-item ativo">
                         <i class="fas fa-arrow-circle-down"></i>
                         Baixas
                     </a>
@@ -72,48 +72,53 @@
 
     <div class="pagina-header">
         <div class="pagina-header-titulo">
-            <i class="fas fa-truck"></i>
-            <h1>Fornecedores</h1>
+            <i class="fas fa-arrow-circle-down"></i>
+            <h1>Nova Baixa</h1>
         </div>
-        <a href="/fornecedores/cadastro" class="btn-novo">
-            <i class="fas fa-plus"></i> Novo Fornecedor
+        <a href="/baixas" class="btn-voltar">
+            <i class="fas fa-arrow-left"></i> Voltar
         </a>
     </div>
 
-    <div class="tabela-container">
-        <table>
-            <thead>
-            <tr>
-                <th>Nome</th>
-                <th>CNPJ</th>
-                <th>Telefone</th>
-                <th>E-mail</th>
-                <th>Ações</th>
-            </tr>
-            </thead>
-            <tbody>
+    <div class="form-card">
 
-            <tr th:each="fornecedor : ${fornecedores}">
-                <td th:text="${fornecedor.nome}"></td>
-                <td th:text="${fornecedor.cnpj}"></td>
-                <td th:text="${fornecedor.telefone}"></td>
-                <td th:text="${fornecedor.email}"></td>
-                <td class="acoes-tabela">
-                    <a th:href="@{/fornecedores/editar/{id}(id=${fornecedor.id})}">Editar</a>
-                    <a th:href="@{/fornecedores/excluir/{id}(id=${fornecedor.id})}"
-                       onclick="return confirm('Confirma a exclusão deste fornecedor?')">Excluir</a>
-                </td>
-            </tr>
+        <form action="/baixas/salvar" method="post">
 
-            <tr th:if="${#lists.isEmpty(fornecedores)}">
-                <td colspan="5" class="tabela-vazia">
-                    Nenhum fornecedor cadastrado.
-                    <a href="/fornecedores/cadastro">Cadastrar agora</a>
-                </td>
-            </tr>
+            <div class="form-grid-2">
 
-            </tbody>
-        </table>
+                <div class="form-grupo">
+                    <label for="data">Data</label>
+                    <input id="data" name="data" type="date" required>
+                </div>
+
+                <div class="form-grupo">
+                    <label for="quantidade">Quantidade</label>
+                    <input id="quantidade" name="quantidade" type="number" min="1" placeholder="0" required>
+                </div>
+
+            </div>
+
+            <div class="form-grupo">
+                <label for="produto">Produto</label>
+                <select id="produto" name="produto.id" required>
+                    <option value="">Selecione um produto</option>
+                    <option
+                            th:each="produto : ${produtos}"
+                            th:value="${produto.id}"
+                            th:text="${produto.nome} + ' (estoque: ' + ${produto.quantidade} + ')'">
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-botoes">
+                <button type="submit" class="btn-salvar">
+                    <i class="fas fa-save"></i> Registrar
+                </button>
+                <a href="/baixas" class="btn-cancelar">Cancelar</a>
+            </div>
+
+        </form>
+
     </div>
 
 </main>
