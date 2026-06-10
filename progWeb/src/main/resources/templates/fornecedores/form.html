@@ -1,59 +1,111 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fornecedor - Marcenaria Stock</title>
+
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-    <h1 th:text="${fornecedor.id == null} ? 'Cadastro de Fornecedor' : 'Editar Fornecedor'"></h1>
+    <main class="pagina">
 
-    <!-- Mensagem de erro exibida quando o CNPJ já está cadastrado -->
-    <p th:if="${erro}" th:text="${erro}" style="color: red; font-weight: bold;"></p>
+        <header>
+            <h1 th:text="${fornecedor.id == null}
+                ? 'Cadastro de Fornecedor'
+                : 'Editar Fornecedor'">
+            </h1>
+        </header>
 
-    <!-- th:object vincula o formulário ao objeto fornecedor do model -->
-    <!-- Se o id for nulo é um fornecedor novo (salvar); senão é edição (atualizar) -->
-    <form th:action="${fornecedor.id == null} ? @{/fornecedores/salvar} : @{/fornecedores/atualizar/{id}(id=${fornecedor.id})}"
-          th:object="${fornecedor}" method="post">
+        <section>
 
-        <!-- Campo oculto para preservar o id ao editar -->
-        <input type="hidden" th:field="*{id}">
+            <p class="erro"
+               th:if="${erro}"
+               th:text="${erro}">
+            </p>
 
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" th:field="*{nome}" placeholder="Nome do fornecedor">
+            <form
+                th:action="${fornecedor.id == null}
+                ? @{/fornecedores/salvar}
+                : @{/fornecedores/atualizar/{id}(id=${fornecedor.id})}"
 
-        <label for="cnpj">CNPJ:</label>
-        <input type="text" id="cnpj" th:field="*{cnpj}" placeholder="00.000.000/0000-00">
+                th:object="${fornecedor}"
+                method="post">
 
-        <label for="telefone">Telefone:</label>
-        <input type="text" id="telefone" th:field="*{telefone}" placeholder="(67) 99999-9999"
-               maxlength="15" oninput="aplicarMascaraTelefone(this)">
+                <input type="hidden" th:field="*{id}">
 
-        <label for="email">E-mail:</label>
-        <input type="email" id="email" th:field="*{email}" placeholder="contato@fornecedor.com">
+                <label for="nome">Nome</label>
+                <input
+                        type="text"
+                        id="nome"
+                        th:field="*{nome}"
+                        placeholder="Nome do fornecedor">
 
-        <button type="submit">Salvar</button>
+                <label for="cnpj">CNPJ</label>
+                <input
+                        type="text"
+                        id="cnpj"
+                        th:field="*{cnpj}"
+                        placeholder="00.000.000/0000-00">
 
-    </form>
+                <label for="telefone">Telefone</label>
+                <input
+                        type="text"
+                        id="telefone"
+                        th:field="*{telefone}"
+                        placeholder="(67) 99999-9999"
+                        maxlength="15"
+                        oninput="aplicarMascaraTelefone(this)">
 
-    <br>
-    <a href="/fornecedores">Voltar</a>
+                <label for="email">E-mail</label>
+                <input
+                        type="email"
+                        id="email"
+                        th:field="*{email}"
+                        placeholder="contato@fornecedor.com">
+
+                <button type="submit">
+                    Salvar
+                </button>
+
+            </form>
+
+        </section>
+
+        <footer>
+            <a href="/fornecedores">Voltar</a>
+        </footer>
+
+    </main>
 
     <script>
-        // Formata o telefone digitado como (XX) XXXXX-XXXX, mantendo só números
         function aplicarMascaraTelefone(campo) {
-            let numeros = campo.value.replace(/\D/g, ""); // remove tudo que não é dígito
-            numeros = numeros.substring(0, 11); // limita a 11 dígitos (DDD + 9 dígitos)
+
+            let numeros = campo.value.replace(/\D/g, "");
+
+            numeros = numeros.substring(0, 11);
 
             if (numeros.length > 10) {
-                campo.value = numeros.replace(/(\d{2})(\d{5})(\d{0,4})/, "($1) $2-$3");
+                campo.value = numeros.replace(
+                    /(\d{2})(\d{5})(\d{0,4})/,
+                    "($1) $2-$3"
+                );
             } else if (numeros.length > 6) {
-                campo.value = numeros.replace(/(\d{2})(\d{4})(\d{0,4})/, "($1) $2-$3");
+                campo.value = numeros.replace(
+                    /(\d{2})(\d{4})(\d{0,4})/,
+                    "($1) $2-$3"
+                );
             } else if (numeros.length > 2) {
-                campo.value = numeros.replace(/(\d{2})(\d{0,5})/, "($1) $2");
+                campo.value = numeros.replace(
+                    /(\d{2})(\d{0,5})/,
+                    "($1) $2"
+                );
             } else {
-                campo.value = numeros.replace(/(\d{0,2})/, "($1");
+                campo.value = numeros.replace(
+                    /(\d{0,2})/,
+                    "($1"
+                );
             }
         }
     </script>

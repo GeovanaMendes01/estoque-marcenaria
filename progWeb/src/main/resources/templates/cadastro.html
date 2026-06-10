@@ -1,34 +1,95 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Cadastro de Produto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Produto</title>
 
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-    <h1>Cadastrar Produto</h1>
+    <main class="pagina">
 
-    <form>
-        <label>Nome do Produto:</label>
-        <input type="text">
+        <header>
+            <h1>Cadastrar Produto</h1>
+        </header>
 
-        <label>Tipo da Madeira:</label>
-        <input type="text">
+        <section>
 
-        <label>Quantidade:</label>
-        <input type="number">
+            <form action="/produtos/salvar" method="post">
 
-        <label>Preço:</label>
-        <input type="number">
+                <label for="nome">
+                    Nome do Produto
+                </label>
+            
+                <input
+                        id="nome"
+                        name="nome"
+                        type="text">
+            
+                <label for="descricao">
+                    Descrição
+                </label>
+            
+                <input
+                        id="descricao"
+                        name="descricao"
+                        type="text">
+            
+                <label for="quantidade">
+                    Quantidade
+                </label>
+            
+                <input
+                        id="quantidade"
+                        name="quantidade"
+                        type="number">
+            
+                <label for="preco">
+                    Preço
+                </label>
+            
+                <input
+                        id="preco"
+                        name="preco"
+                        type="number"
+                        step="0.01">
+            
+                <label for="fornecedor">
+                    Fornecedor
+                </label>
+                
+                <select
+                        id="fornecedor"
+                        name="fornecedor.id"
+                        required>
+                
+                    <option value="">
+                        Selecione um fornecedor
+                    </option>
+                
+                    <option
+                            th:each="fornecedor : ${fornecedores}"
+                            th:value="${fornecedor.id}"
+                            th:text="${fornecedor.nome}">
+                    </option>
+                
+                </select>
+            
+                <button type="submit">
+                    Salvar
+                </button>
+            
+            </form>
 
-        <button type="submit">Salvar</button>
-    </form>
+        </section>
 
-    <br>
+        <footer>
+            <a href="/">Voltar</a>
+        </footer>
 
-    <a href="/">Voltar</a>
+    </main>
 
 </body>
 </html>

@@ -53,7 +53,7 @@ public class ProdutoService {
             produto.setPreco(dadosNovos.getPreco());
         }
 
-        if(dadosNovos.getFornecedor() != null){
+        if (dadosNovos.getFornecedor() != null) {
             produto.setFornecedor(dadosNovos.getFornecedor());
         }
 

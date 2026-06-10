@@ -1,25 +1,97 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Produtos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos - Marcenaria Stock</title>
 
     <link rel="stylesheet" href="/css/style.css">
-
 </head>
 <body>
 
-    <h1>Produtos da Marcenaria</h1>
+<main class="pagina">
 
-    <hr>
+    <header>
+        <h1>Produtos da Marcenaria</h1>
+        <p>Gerenciamento dos produtos cadastrados.</p>
+    </header>
 
-    <ul>
-        <li>Mesa de Madeira</li>
-        <li>Cadeira Rústica</li>
-        <li>Armário Planejado</li>
-    </ul>
+    <section class="acoes">
+        <a href="/produtos/cadastro">
+            Novo Produto
+        </a>
+    </section>
 
-    <a href="/">Voltar</a>
+    <section class="tabela-container">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Quantidade</th>
+                    <th>Preço</th>
+                    <th>Fornecedor</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr th:each="produto : ${produtos}">
+                
+                    <td th:text="${produto.nome}"></td>
+                
+                    <td th:text="${produto.descricao}"></td>
+                
+                    <td th:text="${produto.quantidade}"></td>
+                
+                    <td>
+                        R$
+                        <span th:text="${produto.preco}"></span>
+                    </td>
+                
+                    <td
+                        th:text="${produto.fornecedor != null
+                                  ? produto.fornecedor.nome
+                                  : 'Sem fornecedor'}">
+                    </td>
+                
+                    <td class="acoes-tabela">
+                    
+                        <a
+                            th:href="@{/produtos/editar/{id}(id=${produto.id})}">
+                            Editar
+                        </a>
+                    
+                        <a
+                            th:href="@{/produtos/excluir/{id}(id=${produto.id})}"
+                            onclick="return confirm('Confirma a exclusão deste produto?')">
+                            Excluir
+                        </a>
+                    
+                    </td>
+                
+                </tr>
+                
+                <tr th:if="${#lists.isEmpty(produtos)}">
+                    <td colspan="6">
+                        Nenhum produto cadastrado.
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+    <footer>
+        <a href="/">Voltar</a>
+    </footer>
+
+</main>
 
 </body>
 </html>

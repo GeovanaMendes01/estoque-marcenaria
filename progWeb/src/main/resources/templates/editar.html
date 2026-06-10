@@ -1,34 +1,82 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Editar Produto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Produto</title>
 
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-    <h1>Editar Produto</h1>
+    <main class="pagina">
 
-    <form>
-        <label>Nome do Produto:</label>
-        <input type="text">
+        <header>
+            <h1>Editar Produto</h1>
+        </header>
 
-        <label>Tipo da Madeira:</label>
-        <input type="text">
+        <section>
 
-        <label>Quantidade:</label>
-        <input type="number">
+            <form th:action="@{/produtos/atualizar/{id}(id=${produto.id})}"
+              th:object="${produto}"
+              method="post">
 
-        <label>Preço:</label>
-        <input type="number">
+            <input type="hidden" th:field="*{id}">
 
-        <button type="submit">Atualizar</button>
-    </form>
+            <label for="nome">Nome</label>
+            <input id="nome"
+                   type="text"
+                   th:field="*{nome}">
 
-    <br>
+            <label for="descricao">Descrição</label>
+            <input id="descricao"
+                   type="text"
+                   th:field="*{descricao}">
 
-    <a href="/">Voltar</a>
+            <label for="quantidade">Quantidade</label>
+            <input id="quantidade"
+                   type="number"
+                   th:field="*{quantidade}">
+
+            <label for="preco">Preço</label>
+            <input id="preco"
+                   type="number"
+                   step="0.01"
+                   th:field="*{preco}">
+
+            <label for="fornecedor">
+                Fornecedor
+            </label>
+            
+            <select
+                    id="fornecedor"
+                    name="fornecedor.id"
+                    required>
+            
+                <option
+                        th:each="fornecedor : ${fornecedores}"
+                        th:value="${fornecedor.id}"
+                        th:text="${fornecedor.nome}"
+            
+                        th:selected="${produto.fornecedor != null
+                                      and produto.fornecedor.id == fornecedor.id}">
+                </option>
+            
+            </select>
+        
+            <button type="submit">
+                Atualizar
+            </button>
+        
+        </form>
+
+        </section>
+
+        <footer>
+            <a href="/">Voltar</a>
+        </footer>
+
+    </main>
 
 </body>
 </html>

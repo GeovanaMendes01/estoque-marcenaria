@@ -1,50 +1,78 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fornecedores - Marcenaria Stock</title>
+
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-    <h1>Fornecedores</h1>
+    <main class="pagina">
 
-    <a href="/fornecedores/cadastro">Novo Fornecedor</a>
+        <header>
+            <h1>Fornecedores</h1>
+            <p>Gerenciamento dos fornecedores cadastrados.</p>
+        </header>
 
-    <br><br>
+        <section class="acoes">
+            <a class="botao" href="/fornecedores/cadastro">
+                Novo Fornecedor
+            </a>
+        </section>
 
-    <table border="1" cellpadding="8" cellspacing="0">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>CNPJ</th>
-                <th>Telefone</th>
-                <th>E-mail</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="fornecedor : ${fornecedores}">
-                <td th:text="${fornecedor.nome}"></td>
-                <td th:text="${fornecedor.cnpj}"></td>
-                <td th:text="${fornecedor.telefone}"></td>
-                <td th:text="${fornecedor.email}"></td>
-                <td>
-                    <a th:href="@{/fornecedores/editar/{id}(id=${fornecedor.id})}">Editar</a>
-                    &nbsp;
-                    <a th:href="@{/fornecedores/excluir/{id}(id=${fornecedor.id})}"
-                       onclick="return confirm('Confirma a exclusão deste fornecedor?')">Excluir</a>
-                </td>
-            </tr>
-            <!-- Mensagem quando não há fornecedores cadastrados -->
-            <tr th:if="${#lists.isEmpty(fornecedores)}">
-                <td colspan="5">Nenhum fornecedor cadastrado.</td>
-            </tr>
-        </tbody>
-    </table>
+        <section class="tabela-container">
 
-    <br>
-    <a href="/">Voltar</a>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>CNPJ</th>
+                        <th>Telefone</th>
+                        <th>E-mail</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr th:each="fornecedor : ${fornecedores}">
+                        <td th:text="${fornecedor.nome}"></td>
+                        <td th:text="${fornecedor.cnpj}"></td>
+                        <td th:text="${fornecedor.telefone}"></td>
+                        <td th:text="${fornecedor.email}"></td>
+
+                        <td class="acoes-tabela">
+
+                            <a th:href="@{/fornecedores/editar/{id}(id=${fornecedor.id})}">
+                                Editar
+                            </a>
+
+                            <a th:href="@{/fornecedores/excluir/{id}(id=${fornecedor.id})}"
+                               onclick="return confirm('Confirma a exclusão deste fornecedor?')">
+                                Excluir
+                            </a>
+
+                        </td>
+                    </tr>
+
+                    <tr th:if="${#lists.isEmpty(fornecedores)}">
+                        <td colspan="5">
+                            Nenhum fornecedor cadastrado.
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </section>
+
+        <footer>
+            <a href="/">Voltar</a>
+        </footer>
+
+    </main>
 
 </body>
 </html>

@@ -1,40 +1,202 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 30px;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-h1 {
-    color: #5c3b1e;
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background:#f4f4f4;
+    color:#333;
 }
 
-a {
-    text-decoration: none;
-    background-color: #8b5a2b;
+/* INDEX */
+
+.sidebar{
+    position:fixed;
+    width:220px;
+    height:100vh;
+    background:#5c3b1e;
+    padding:20px;
+}
+
+.sidebar h2{
+    color:white;
+    margin-bottom:20px;
+}
+
+.sidebar ul{
+    list-style:none;
+}
+
+.sidebar li{
+    margin-bottom:10px;
+}
+
+.sidebar a{
+    color:white;
+    text-decoration:none;
+    display:block;
+    padding:8px;
+    border-radius:5px;
+}
+
+.sidebar a:hover{
+    background:#744c26;
+}
+
+.conteudo{
+    margin-left:240px;
+    padding:30px;
+}
+
+.conteudo header{
+    margin-bottom:30px;
+}
+
+.cards{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:8px;
+    width:250px;
+    border:1px solid #ddd;
+}
+
+.card h2{
+    margin-bottom:10px;
+}
+
+.card p{
+    margin-bottom:15px;
+}
+
+/* PÁGINAS */
+
+.pagina{
+    max-width:700px;
+    margin:40px auto;
+    background:white;
+    padding:30px;
+    border-radius:8px;
+    border:1px solid #ddd;
+}
+
+.pagina header{
+    margin-bottom:20px;
+}
+
+.lista-produtos{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.produto{
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:5px;
+}
+
+form{
+    display:flex;
+    flex-direction:column;
+}
+
+label{
+    margin-top:10px;
+    margin-bottom:5px;
+}
+
+input{
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+button{
+    margin-top:15px;
+    padding:10px;
+    background:#8b5a2b;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#6f4518;
+}
+
+footer{
+    margin-top:20px;
+}
+
+footer a,
+.card a{
+    display:inline-block;
+    padding:10px 15px;
+    background:#8b5a2b;
+    color:white;
+    text-decoration:none;
+    border-radius:5px;
+}
+
+footer a:hover,
+.card a:hover{
+    background:#6f4518;
+}
+
+/* pag de fornecedores */
+
+.acoes {
+    margin-bottom: 20px;
+}
+
+.tabela-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #5c3b1e;
     color: white;
-    padding: 10px;
-    border-radius: 5px;
 }
 
-a:hover {
-    background-color: #6f4518;
-}
-
-form {
+.acoes-tabela {
     display: flex;
-    flex-direction: column;
-    width: 300px;
+    gap: 8px;
 }
 
-input {
-    padding: 8px;
-    margin-bottom: 10px;
+.acoes-tabela a {
+    text-decoration: none;
+    color: #8b5a2b;
+    font-weight: bold;
 }
 
-button {
-    padding: 10px;
-    background-color: #8b5a2b;
-    color: white;
-    border: none;
-    border-radius: 5px;
+.acoes-tabela a:hover {
+    text-decoration: underline;
+}
+
+.erro {
+    color: #c62828;
+    font-weight: bold;
+    margin-bottom: 15px;
 }

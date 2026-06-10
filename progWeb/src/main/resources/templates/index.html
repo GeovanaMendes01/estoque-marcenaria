@@ -1,23 +1,54 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marcenaria Stock</title>
 
     <link rel="stylesheet" href="/css/style.css">
-
 </head>
 <body>
 
-    <h1>Sistema de Estoque da Marcenaria</h1>
+    <aside class="sidebar">
+        <h2>Marcenaria Stock</h2>
 
-    <hr>
+        <nav>
+            <ul>
+                <li><a href="/">Início</a></li>
+                <li><a href="/produtos">Produtos</a></li>
+                <li><a href="/fornecedores">Fornecedores</a></li>
+            </ul>
+        </nav>
+    </aside>
 
-    <a href="/produtos">Gerenciar Produtos</a>
+    <main class="conteudo">
+        <header>
+            <h1>Sistema de Estoque da Marcenaria</h1>
 
-    <br><br>
+            <p>
+                Projeto desenvolvido para auxiliar no controle de
+                produtos e fornecedores.
+            </p>
+        </header>
 
-    <a href="/fornecedores">Gerenciar Fornecedores</a>
+        <section class="cards">
+
+            <article class="card">
+                <h2>Produtos</h2>
+                <p>Visualizar e gerenciar produtos cadastrados.</p>
+
+                <a href="/produtos">Acessar</a>
+            </article>
+
+            <article class="card">
+                <h2>Fornecedores</h2>
+                <p>Visualizar e gerenciar fornecedores.</p>
+
+                <a href="/fornecedores">Acessar</a>
+            </article>
+
+        </section>
+    </main>
 
 </body>
 </html>
