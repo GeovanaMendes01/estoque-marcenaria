@@ -6,49 +6,97 @@
     <title>Marcenaria Stock</title>
 
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
 
-    <aside class="sidebar">
-        <h2>Marcenaria Stock</h2>
+<aside class="sidebar">
 
-        <nav>
+    <div class="sidebar-logo">
+        <i class="fas fa-tools sidebar-logo-icon"></i>
+        <div class="sidebar-logo-texto">
+            <span class="sidebar-logo-nome">Marcenaria</span>
+            <span class="sidebar-logo-sub">Sistema de Estoque</span>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav">
+
+        <div class="nav-grupo">
+            <span class="nav-label">PRINCIPAL</span>
             <ul>
-                <li><a href="/">Início</a></li>
-                <li><a href="/produtos">Produtos</a></li>
-                <li><a href="/fornecedores">Fornecedores</a></li>
+                <li>
+                    <a href="/" class="nav-item ativo">
+                        <i class="fas fa-home"></i>
+                        Dashboard
+                    </a>
+                </li>
             </ul>
-        </nav>
-    </aside>
+        </div>
 
-    <main class="conteudo">
-        <header>
-            <h1>Sistema de Estoque da Marcenaria</h1>
+        <div class="nav-grupo">
+            <span class="nav-label">ESTOQUE</span>
+            <ul>
+                <li>
+                    <a href="/produtos" class="nav-item">
+                        <i class="fas fa-boxes"></i>
+                        Produtos
+                    </a>
+                </li>
+                <li>
+                    <a href="/fornecedores" class="nav-item">
+                        <i class="fas fa-truck"></i>
+                        Fornecedores
+                    </a>
+                </li>
+            </ul>
+        </div>
 
-            <p>
-                Projeto desenvolvido para auxiliar no controle de
-                produtos e fornecedores.
-            </p>
-        </header>
+        <div class="nav-grupo">
+            <span class="nav-label">MOVIMENTAÇÕES</span>
+            <ul>
+                <li>
+                    <a href="/baixas" class="nav-item">
+                        <i class="fas fa-arrow-circle-down"></i>
+                        Baixas
+                    </a>
+                </li>
+            </ul>
+        </div>
 
-        <section class="cards">
+    </nav>
 
-            <article class="card">
-                <h2>Produtos</h2>
-                <p>Visualizar e gerenciar produtos cadastrados.</p>
+</aside>
 
-                <a href="/produtos">Acessar</a>
-            </article>
+<main class="conteudo">
+    <header>
+        <h1>Sistema de Estoque da Marcenaria</h1>
+        <p>Projeto desenvolvido para auxiliar no controle de produtos e fornecedores.</p>
+    </header>
 
-            <article class="card">
-                <h2>Fornecedores</h2>
-                <p>Visualizar e gerenciar fornecedores.</p>
+    <section class="acoes-rapidas">
+        <h2 class="acoes-rapidas-titulo">Ações Rápidas</h2>
 
-                <a href="/fornecedores">Acessar</a>
-            </article>
+        <div class="acoes-rapidas-botoes">
 
-        </section>
-    </main>
+            <a href="/produtos/cadastro" class="btn-acao btn-produto">
+                <i class="fas fa-plus"></i>
+                Novo Produto
+            </a>
+
+            <a href="/baixas/cadastro" class="btn-acao btn-baixa">
+                <i class="fas fa-arrow-circle-down"></i>
+                Nova Baixa
+            </a>
+
+            <a href="/fornecedores/cadastro" class="btn-acao btn-fornecedor">
+                <i class="fas fa-truck"></i>
+                Novo Fornecedor
+            </a>
+
+        </div>
+    </section>
+</main>
 
 </body>
 </html>
