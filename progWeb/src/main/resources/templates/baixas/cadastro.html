@@ -82,6 +82,8 @@
 
     <div class="form-card">
 
+        <p class="erro" th:if="${erro}" th:text="${erro}"></p>
+
         <form action="/baixas/salvar" method="post">
 
             <div class="form-grid-2">

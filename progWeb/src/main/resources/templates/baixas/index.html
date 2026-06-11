@@ -80,6 +80,23 @@
         </a>
     </div>
 
+    <div class="filtro-exportar">
+        <span class="filtro-titulo"><i class="fas fa-file-excel"></i> Exportar Excel</span>
+        <form action="/baixas/exportar" method="get" class="filtro-form">
+            <div class="filtro-grupo">
+                <label for="dataInicio">De</label>
+                <input type="date" id="dataInicio" name="dataInicio">
+            </div>
+            <div class="filtro-grupo">
+                <label for="dataFim">Até</label>
+                <input type="date" id="dataFim" name="dataFim">
+            </div>
+            <button type="submit" class="btn-exportar">
+                <i class="fas fa-download"></i> Baixar
+            </button>
+        </form>
+    </div>
+
     <div class="tabela-container">
         <table>
             <thead>

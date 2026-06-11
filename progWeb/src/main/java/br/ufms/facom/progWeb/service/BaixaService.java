@@ -6,6 +6,7 @@ import br.ufms.facom.progWeb.repositories.BaixaRepository;
 import br.ufms.facom.progWeb.repositories.ProdutoRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -27,7 +28,6 @@ public class BaixaService {
             throw new RuntimeException("Estoque insuficiente");
         }
 
-        // Desconta do estoque
         produto.setQuantidade(produto.getQuantidade() - baixa.getQuantidade());
         produtoRepository.save(produto);
 
@@ -35,6 +35,17 @@ public class BaixaService {
     }
 
     public List<Baixa> getBaixas() {
+        return repository.findAll();
+    }
+
+    public List<Baixa> getBaixasPorPeriodo(LocalDate inicio, LocalDate fim) {
+        if (inicio != null && fim != null) {
+            return repository.findByDataBetween(inicio, fim);
+        } else if (inicio != null) {
+            return repository.findByDataGreaterThanEqual(inicio);
+        } else if (fim != null) {
+            return repository.findByDataLessThanEqual(fim);
+        }
         return repository.findAll();
     }
 
