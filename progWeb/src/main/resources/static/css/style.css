@@ -480,3 +480,58 @@ th {
 .btn-exportar:hover {
     opacity: 0.85;
 }
+
+
+/* FILTRO DE EXPORTAÇÃO */
+
+.filtro-exportar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: white;
+    padding: 14px 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filtro-titulo {
+    font-size: 14px;
+    font-weight: bold;
+    color: #444;
+    white-space: nowrap;
+}
+
+.filtro-titulo i {
+    color: #2e7d32;
+    margin-right: 4px;
+}
+
+.filtro-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.filtro-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.filtro-grupo label {
+    font-size: 12px;
+    font-weight: bold;
+    color: #666;
+    margin: 0;
+}
+
+.filtro-grupo input[type="date"] {
+    padding: 7px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
