@@ -6,7 +6,7 @@
 
 body{
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #efe3d2;
+    background-color: #e7d0b1;
     color:#333;
 }
 
@@ -534,4 +534,71 @@ th {
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 14px;
+}
+
+
+/* DASHBOARD */
+
+.dashboard-titulo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.dashboard-titulo i {
+    font-size: 24px;
+    color: #8b5a2b;
+}
+
+.dashboard-titulo h1 {
+    font-size: 26px;
+    color: #333;
+}
+
+.dashboard-cards {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+}
+
+.dashboard-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+    min-width: 160px;
+}
+
+.dashboard-card-icon {
+    font-size: 28px;
+    color: #8b5a2b;
+}
+
+.dashboard-card-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-card-numero {
+    font-size: 26px;
+    font-weight: bold;
+    color: #333;
+    line-height: 1.1;
+}
+
+.dashboard-card-label {
+    font-size: 13px;
+    color: #888;
+    margin-top: 2px;
+}
+
+.dashboard-card-alerta .dashboard-card-icon,
+.dashboard-card-alerta .dashboard-card-numero {
+    color: #c62828;
 }

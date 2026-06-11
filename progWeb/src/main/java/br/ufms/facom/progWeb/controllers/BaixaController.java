@@ -45,9 +45,15 @@ public class BaixaController {
     }
 
     @PostMapping("/salvar")
-    public String salvar(@ModelAttribute Baixa baixa) {
-        service.registrarBaixa(baixa);
-        return "redirect:/baixas";
+    public String salvar(@ModelAttribute Baixa baixa, Model model) {
+        try {
+            service.registrarBaixa(baixa);
+            return "redirect:/baixas";
+        } catch (RuntimeException e) {
+            model.addAttribute("erro", e.getMessage());
+            model.addAttribute("produtos", produtoService.getProdutos());
+            return "baixas/cadastro";
+        }
     }
 
     @GetMapping("/excluir/{id}")
@@ -67,14 +73,12 @@ public class BaixaController {
         XSSFWorkbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Baixas");
 
-        // Cabeçalho
         Row header = sheet.createRow(0);
         String[] colunas = {"Data", "Produto", "Quantidade"};
         for (int i = 0; i < colunas.length; i++) {
             header.createCell(i).setCellValue(colunas[i]);
         }
 
-        // Dados
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         int rowNum = 1;
         for (Baixa b : baixas) {
@@ -84,7 +88,6 @@ public class BaixaController {
             row.createCell(2).setCellValue(b.getQuantidade() != null ? b.getQuantidade() : 0);
         }
 
-        // Ajusta largura das colunas automaticamente
         for (int i = 0; i < colunas.length; i++) {
             sheet.autoSizeColumn(i);
         }

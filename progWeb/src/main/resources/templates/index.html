@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -69,10 +69,39 @@
 </aside>
 
 <main class="conteudo">
-    <header>
-        <h1>Sistema de Estoque da Marcenaria</h1>
-        <p>Projeto desenvolvido para auxiliar no controle de produtos e fornecedores.</p>
-    </header>
+
+    <div class="dashboard-titulo">
+        <i class="fas fa-tachometer-alt"></i>
+        <h1>Dashboard</h1>
+    </div>
+
+    <div class="dashboard-cards">
+
+        <div class="dashboard-card">
+            <i class="fas fa-boxes dashboard-card-icon"></i>
+            <div class="dashboard-card-info">
+                <span class="dashboard-card-numero" th:text="${totalProdutos}">0</span>
+                <span class="dashboard-card-label">Produtos</span>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <i class="fas fa-truck dashboard-card-icon"></i>
+            <div class="dashboard-card-info">
+                <span class="dashboard-card-numero" th:text="${totalFornecedores}">0</span>
+                <span class="dashboard-card-label">Fornecedores</span>
+            </div>
+        </div>
+
+        <div class="dashboard-card dashboard-card-alerta">
+            <i class="fas fa-exclamation-circle dashboard-card-icon"></i>
+            <div class="dashboard-card-info">
+                <span class="dashboard-card-numero" th:text="${totalEmAlerta}">0</span>
+                <span class="dashboard-card-label">Estoque em Alerta</span>
+            </div>
+        </div>
+
+    </div>
 
     <section class="acoes-rapidas">
         <h2 class="acoes-rapidas-titulo">Ações Rápidas</h2>
@@ -96,6 +125,7 @@
 
         </div>
     </section>
+
 </main>
 
 </body>
