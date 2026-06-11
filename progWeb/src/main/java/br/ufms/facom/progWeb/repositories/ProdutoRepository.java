@@ -7,4 +7,6 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
 
     long countByQuantidadeLessThanEqual(Integer quantidade);
+
+    boolean existsByFornecedorId(Long fornecedorId);
 }

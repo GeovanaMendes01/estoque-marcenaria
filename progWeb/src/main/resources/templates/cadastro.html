@@ -82,40 +82,43 @@
 
     <div class="form-card">
 
+        <p class="erro" th:if="${erro}" th:text="${erro}"></p>
+
         <form action="/produtos/salvar" method="post">
 
             <div class="form-grupo">
                 <label for="nome">Nome do Produto</label>
-                <input id="nome" name="nome" type="text" placeholder="Ex: Compensado Naval 18mm">
+                <input id="nome" name="nome" type="text" placeholder="Ex: Compensado Naval 18mm" th:value="${produto?.nome}">
             </div>
 
             <div class="form-grupo">
                 <label for="descricao">Descrição</label>
-                <input id="descricao" name="descricao" type="text" placeholder="Detalhes adicionais sobre o produto...">
+                <input id="descricao" name="descricao" type="text" placeholder="Detalhes adicionais sobre o produto..." th:value="${produto?.descricao}">
             </div>
 
             <div class="form-grid-2">
 
                 <div class="form-grupo">
                     <label for="quantidade">Quantidade em Estoque</label>
-                    <input id="quantidade" name="quantidade" type="number" placeholder="0">
+                    <input id="quantidade" name="quantidade" type="number" placeholder="0" th:value="${produto?.quantidade}">
                 </div>
 
                 <div class="form-grupo">
                     <label for="preco">Preço (R$)</label>
-                    <input id="preco" name="preco" type="number" step="0.01" placeholder="0,00">
+                    <input id="preco" name="preco" type="number" step="0.01" placeholder="0,00" th:value="${produto?.preco}">
                 </div>
 
             </div>
 
             <div class="form-grupo">
                 <label for="fornecedor">Fornecedor</label>
-                <select id="fornecedor" name="fornecedor.id">
-                    <option value="">Nenhum</option>
+                <select id="fornecedor" name="fornecedor.id" required>
+                    <option value="" th:selected="${produto?.fornecedor?.id == null}" disabled>Selecione um fornecedor</option>
                     <option
                             th:each="fornecedor : ${fornecedores}"
                             th:value="${fornecedor.id}"
-                            th:text="${fornecedor.nome}">
+                            th:text="${fornecedor.nome}"
+                            th:selected="${produto != null and produto.fornecedor != null and produto.fornecedor.id == fornecedor.id}">
                     </option>
                 </select>
             </div>

@@ -45,7 +45,14 @@ public class ProdutoController {
     }
 
     @PostMapping("/salvar")
-    public String salvar(@ModelAttribute Produto produto) {
+    public String salvar(@ModelAttribute Produto produto, Model model) {
+        if (produto.getFornecedor() == null || produto.getFornecedor().getId() == null) {
+            model.addAttribute("erro", "Selecione um fornecedor existente para o produto.");
+            model.addAttribute("produto", produto);
+            model.addAttribute("fornecedores", fornecedorService.getFornecedores());
+            return "cadastro";
+        }
+
         service.salvarProduto(produto);
         return "redirect:/produtos";
     }

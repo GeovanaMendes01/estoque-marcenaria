@@ -2,6 +2,7 @@ package br.ufms.facom.progWeb.service;
 
 import br.ufms.facom.progWeb.models.Fornecedor;
 import br.ufms.facom.progWeb.repositories.FornecedorRepository;
+import br.ufms.facom.progWeb.repositories.ProdutoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,9 +11,11 @@ import java.util.List;
 public class FornecedorService {
 
     private final FornecedorRepository repository;
+    private final ProdutoRepository produtoRepository;
 
-    public FornecedorService(FornecedorRepository repository) {
+    public FornecedorService(FornecedorRepository repository, ProdutoRepository produtoRepository) {
         this.repository = repository;
+        this.produtoRepository = produtoRepository;
     }
 
     public void salvarFornecedor(Fornecedor fornecedor) {
@@ -32,6 +35,9 @@ public class FornecedorService {
     }
 
     public void excluirFornecedor(Long id) {
+        if (produtoRepository.existsByFornecedorId(id)) {
+            throw new IllegalArgumentException("Não é possível excluir: existem produtos cadastrados com este fornecedor.");
+        }
         repository.deleteById(id);
     }
 

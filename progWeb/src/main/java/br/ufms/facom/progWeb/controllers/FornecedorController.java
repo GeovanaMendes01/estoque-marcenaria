@@ -5,6 +5,7 @@ import br.ufms.facom.progWeb.service.FornecedorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/fornecedores")
@@ -62,8 +63,12 @@ public class FornecedorController {
     }
 
     @GetMapping("/excluir/{id}")
-    public String excluir(@PathVariable Long id) {
-        service.excluirFornecedor(id);
+    public String excluir(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            service.excluirFornecedor(id);
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("erro", e.getMessage());
+        }
         return "redirect:/fornecedores";
     }
 }
